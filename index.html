@@ -811,8 +811,7 @@ async function submitForm() {
   spinner.style.display = 'block';
 
   // ── send to Google Sheets ──
-  if (SCRIPT_URL !== 'https://script.google.com/macros/s/AKfycbwajaKH8iEmmMB0KEA0h3m5TsMOKQSsK_6mnbgBBIn0cDwri6gfSHpIFUEsDcEhD7XyNw/exec') {
-    try {
+if (SCRIPT_URL !== 'YOUR_SCRIPT_URL_HERE') {    try {
       await fetch(SCRIPT_URL, {
         method: 'POST',
         mode: 'no-cors',
