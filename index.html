@@ -6,431 +6,99 @@
 <title>طلب تركيب عداد الماء — دائرة ماء كركوك</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --green-deep:   #064E3B;
-    --green-main:   #0F6E56;
-    --green-mid:    #1D9E75;
-    --green-light:  #5DCAA5;
-    --green-pale:   #D1FAE5;
-    --green-bg:     #ECFDF5;
-    --blue-water:   #0EA5E9;
-    --blue-pale:    #E0F2FE;
-    --gray-900:     #111827;
-    --gray-700:     #374151;
-    --gray-500:     #6B7280;
-    --gray-300:     #D1D5DB;
-    --gray-100:     #F3F4F6;
-    --white:        #FFFFFF;
-    --red:          #EF4444;
-    --radius-sm:    6px;
-    --radius-md:    10px;
-    --radius-lg:    16px;
-    --radius-xl:    22px;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: 'Cairo', sans-serif;
-    background: #F0FDF8;
-    min-height: 100vh;
-    color: var(--gray-900);
-    direction: rtl;
-  }
-
-  /* ── page background pattern ── */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      radial-gradient(circle at 20% 20%, rgba(93,202,165,0.12) 0%, transparent 50%),
-      radial-gradient(circle at 80% 80%, rgba(14,165,233,0.10) 0%, transparent 50%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .page-wrap {
-    position: relative;
-    z-index: 1;
-    max-width: 620px;
-    margin: 0 auto;
-    padding: 1.5rem 1rem 4rem;
-  }
-
-  /* ── language switcher ── */
-  .lang-bar {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin-bottom: 1.5rem;
-  }
-  .lang-btn {
-    padding: 8px 28px;
-    border-radius: 50px;
-    border: 1.5px solid var(--green-light);
-    background: var(--white);
-    font-family: 'Cairo', sans-serif;
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--green-main);
-    cursor: pointer;
-    transition: all 0.18s;
-  }
-  .lang-btn:hover { background: var(--green-bg); }
-  .lang-btn.active {
-    background: var(--green-main);
-    color: var(--white);
-    border-color: var(--green-main);
-  }
-
-  /* ── header ── */
-  .header {
-    background: var(--white);
-    border-radius: var(--radius-xl);
-    border: 1px solid rgba(93,202,165,0.3);
-    padding: 2rem 1.5rem 1.75rem;
-    text-align: center;
-    margin-bottom: 1.25rem;
-    position: relative;
-    overflow: hidden;
-  }
-  .header::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--green-deep), var(--green-mid), var(--blue-water), var(--green-mid), var(--green-deep));
-  }
-
-  /* pipe decoration */
-  .pipe-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-    margin-bottom: 1.25rem;
-  }
-  .pipe-h { height: 5px; border-radius: 3px; background: var(--green-pale); }
-  .pipe-h.lg { width: 48px; }
-  .pipe-h.sm { width: 18px; }
-  .pipe-dot {
-    width: 12px; height: 12px;
-    border-radius: 50%;
-    background: var(--green-mid);
-    border: 2px solid var(--white);
-    box-shadow: 0 0 0 2px var(--green-light);
-  }
-  .pipe-valve {
-    width: 20px; height: 20px;
-    border-radius: 50%;
-    background: var(--green-deep);
-    display: flex; align-items: center; justify-content: center;
-  }
-  .pipe-valve svg { width: 12px; height: 12px; fill: var(--white); }
-
-  .emblem {
-    width: 80px; height: 80px;
-    border-radius: 50%;
-    background: var(--green-bg);
-    border: 2.5px solid var(--green-light);
-    display: flex; align-items: center; justify-content: center;
-    margin: 0 auto 1rem;
-  }
-  .emblem svg { width: 40px; height: 40px; }
-
-  .header-dept {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--green-main);
-    letter-spacing: 0.02em;
-    margin-bottom: 6px;
-  }
-  .header-title {
-    font-size: 22px;
-    font-weight: 700;
-    color: var(--gray-900);
-    line-height: 1.35;
-    margin-bottom: 5px;
-  }
-  .header-sub {
-    font-size: 13px;
-    color: var(--gray-500);
-  }
-
-  /* ── cards ── */
-  .card {
-    background: var(--white);
-    border-radius: var(--radius-lg);
-    border: 1px solid rgba(93,202,165,0.25);
-    padding: 1.35rem 1.35rem 1.1rem;
-    margin-bottom: 1.1rem;
-  }
-
-  .card-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 1.1rem;
-    padding-bottom: 0.85rem;
-    border-bottom: 1px dashed rgba(29,158,117,0.2);
-  }
-  .card-icon {
-    width: 36px; height: 36px;
-    border-radius: var(--radius-sm);
-    background: var(--green-bg);
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-  .card-icon svg { width: 20px; height: 20px; stroke: var(--green-main); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-  .card-label { font-size: 15px; font-weight: 600; color: var(--gray-900); }
-
-  /* ── fields ── */
-  .field { margin-bottom: 1rem; }
-  .field:last-child { margin-bottom: 0; }
-  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-
-  .field label {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--gray-700);
-    margin-bottom: 7px;
-  }
-  .req { color: var(--red); font-size: 15px; line-height: 1; }
-
-  .field input, .field textarea, .field select {
-    width: 100%;
-    padding: 11px 14px;
-    border: 1.5px solid var(--gray-300);
-    border-radius: var(--radius-md);
-    font-size: 14px;
-    font-family: 'Cairo', sans-serif;
-    color: var(--gray-900);
-    background: var(--white);
-    transition: border-color 0.15s, box-shadow 0.15s;
-    direction: rtl;
-  }
-  .field input:focus, .field textarea:focus {
-    outline: none;
-    border-color: var(--green-mid);
-    box-shadow: 0 0 0 3.5px rgba(29,158,117,0.13);
-  }
-  .field input::placeholder, .field textarea::placeholder {
-    color: var(--gray-300);
-    font-size: 13px;
-  }
-  .field textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
-  .field input.error, .field textarea.error { border-color: var(--red); }
-
-  /* ── timestamp ── */
-  .ts-card {
-    background: var(--green-bg);
-    border: 1px solid rgba(93,202,165,0.4);
-    border-radius: var(--radius-md);
-    padding: 12px 16px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 1.25rem;
-    direction: rtl;
-  }
-  .ts-icon {
-    width: 38px; height: 38px;
-    border-radius: var(--radius-sm);
-    background: rgba(15,110,86,0.12);
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-  .ts-icon svg { width: 20px; height: 20px; stroke: var(--green-deep); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-  .ts-body { flex: 1; }
-  .ts-label { font-size: 11px; font-weight: 600; color: var(--green-main); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 2px; }
-  .ts-value { font-size: 14px; font-weight: 500; color: var(--green-deep); }
-
-  /* ── submit button ── */
-  .submit-btn {
-    width: 100%;
-    padding: 15px;
-    background: var(--green-main);
-    color: var(--white);
-    border: none;
-    border-radius: var(--radius-lg);
-    font-size: 17px;
-    font-weight: 700;
-    font-family: 'Cairo', sans-serif;
-    cursor: pointer;
-    transition: background 0.15s, transform 0.1s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 1rem;
-    letter-spacing: 0.02em;
-  }
-  .submit-btn:hover { background: var(--green-deep); }
-  .submit-btn:active { transform: scale(0.985); }
-  .submit-btn svg { width: 20px; height: 20px; stroke: var(--white); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .submit-btn.loading { background: var(--gray-500); cursor: not-allowed; }
-
-  /* ── spinner ── */
-  .spinner {
-    width: 20px; height: 20px;
-    border: 2.5px solid rgba(255,255,255,0.35);
-    border-top-color: #fff;
-    border-radius: 50%;
-    animation: spin 0.75s linear infinite;
-    display: none;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  /* ── footer watermark ── */
-  .footer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 7px;
-    font-size: 12px;
-    color: var(--gray-500);
-    padding: 0.5rem 0;
-  }
-  .footer svg { width: 14px; height: 14px; stroke: var(--green-mid); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-
-  /* ── success screen ── */
-  .success-wrap {
-    display: none;
-    text-align: center;
-    padding: 2rem 0.5rem 3rem;
-  }
-  .success-ring {
-    width: 84px; height: 84px;
-    border-radius: 50%;
-    background: var(--green-bg);
-    border: 3px solid var(--green-light);
-    display: flex; align-items: center; justify-content: center;
-    margin: 0 auto 1.25rem;
-  }
-  .success-ring svg { width: 40px; height: 40px; stroke: var(--green-main); fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
-  .ok-title { font-size: 22px; font-weight: 700; margin-bottom: 6px; color: var(--gray-900); }
-  .ok-sub { font-size: 14px; color: var(--gray-500); margin-bottom: 4px; }
-  .ref-num { font-size: 28px; font-weight: 700; color: var(--green-main); letter-spacing: 0.06em; margin: 0.75rem 0 1.75rem; font-variant-numeric: tabular-nums; }
-
-  .receipt-card {
-    background: var(--white);
-    border: 1px solid rgba(93,202,165,0.3);
-    border-radius: var(--radius-lg);
-    padding: 1.25rem;
-    text-align: right;
-    direction: rtl;
-    margin-bottom: 1.5rem;
-  }
-  .receipt-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 8px 0;
-    border-bottom: 1px dashed rgba(0,0,0,0.07);
-    gap: 12px;
-  }
-  .receipt-row:last-child { border: none; padding-bottom: 0; }
-  .r-label { font-size: 12px; font-weight: 500; color: var(--gray-500); white-space: nowrap; }
-  .r-value { font-size: 13px; font-weight: 600; color: var(--gray-900); text-align: left; word-break: break-word; flex: 1; }
-
-  .status-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: var(--green-pale);
-    color: var(--green-deep);
-    font-size: 12px;
-    font-weight: 700;
-    padding: 5px 14px;
-    border-radius: 50px;
-    margin-bottom: 1.5rem;
-  }
-  .status-badge::before {
-    content: '';
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: var(--green-mid);
-    animation: pulse 1.8s ease-in-out infinite;
-  }
-  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.4)} }
-
-  .reset-btn {
-    padding: 11px 36px;
-    border: 1.5px solid var(--green-light);
-    border-radius: var(--radius-lg);
-    background: var(--white);
-    font-family: 'Cairo', sans-serif;
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--green-main);
-    cursor: pointer;
-    transition: all 0.15s;
-  }
-  .reset-btn:hover { background: var(--green-bg); }
-
-  /* ── SETUP GUIDE overlay ── */
-  .guide-banner {
-    background: #FFF7ED;
-    border: 1px solid #FED7AA;
-    border-radius: var(--radius-md);
-    padding: 14px 16px;
-    margin-bottom: 1.1rem;
-    font-size: 13px;
-    color: #92400E;
-    direction: rtl;
-    line-height: 1.7;
-  }
-  .guide-banner strong { color: #78350F; font-weight: 700; }
-  .guide-banner a { color: #B45309; }
-
-  @media (max-width: 480px) {
-    .two-col { grid-template-columns: 1fr; }
-    .header-title { font-size: 19px; }
-    .lang-btn { padding: 7px 20px; font-size: 14px; }
-  }
+:root {
+  --green-deep:#064E3B;--green-main:#0F6E56;--green-mid:#1D9E75;
+  --green-light:#5DCAA5;--green-pale:#D1FAE5;--green-bg:#ECFDF5;
+  --blue-water:#0EA5E9;--gray-900:#111827;--gray-700:#374151;
+  --gray-500:#6B7280;--gray-300:#D1D5DB;--white:#FFFFFF;--red:#EF4444;
+  --radius-sm:6px;--radius-md:10px;--radius-lg:16px;--radius-xl:22px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Cairo',sans-serif;background:#F0FDF8;min-height:100vh;color:var(--gray-900);direction:rtl;}
+body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(circle at 20% 20%,rgba(93,202,165,0.12) 0%,transparent 50%),radial-gradient(circle at 80% 80%,rgba(14,165,233,0.10) 0%,transparent 50%);pointer-events:none;z-index:0;}
+.page-wrap{position:relative;z-index:1;max-width:620px;margin:0 auto;padding:1.5rem 1rem 4rem;}
+.lang-bar{display:flex;justify-content:center;gap:8px;margin-bottom:1.5rem;}
+.lang-btn{padding:8px 28px;border-radius:50px;border:1.5px solid var(--green-light);background:var(--white);font-family:'Cairo',sans-serif;font-size:15px;font-weight:600;color:var(--green-main);cursor:pointer;transition:all 0.18s;}
+.lang-btn:hover{background:var(--green-bg);}
+.lang-btn.active{background:var(--green-main);color:var(--white);border-color:var(--green-main);}
+.header{background:var(--white);border-radius:var(--radius-xl);border:1px solid rgba(93,202,165,0.3);padding:2rem 1.5rem 1.75rem;text-align:center;margin-bottom:1.25rem;position:relative;overflow:hidden;}
+.header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--green-deep),var(--green-mid),var(--blue-water),var(--green-mid),var(--green-deep));}
+.pipe-row{display:flex;align-items:center;justify-content:center;gap:5px;margin-bottom:1.25rem;}
+.pipe-h{height:5px;border-radius:3px;background:var(--green-pale);}
+.pipe-h.lg{width:48px;}.pipe-h.sm{width:18px;}
+.pipe-dot{width:12px;height:12px;border-radius:50%;background:var(--green-mid);border:2px solid var(--white);box-shadow:0 0 0 2px var(--green-light);}
+.pipe-valve{width:20px;height:20px;border-radius:50%;background:var(--green-deep);display:flex;align-items:center;justify-content:center;}
+.pipe-valve svg{width:12px;height:12px;fill:var(--white);}
+.emblem{width:80px;height:80px;border-radius:50%;background:var(--green-bg);border:2.5px solid var(--green-light);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;}
+.emblem svg{width:40px;height:40px;}
+.header-dept{font-size:13px;font-weight:600;color:var(--green-main);letter-spacing:0.02em;margin-bottom:6px;}
+.header-title{font-size:22px;font-weight:700;color:var(--gray-900);line-height:1.35;margin-bottom:5px;}
+.header-sub{font-size:13px;color:var(--gray-500);}
+.card{background:var(--white);border-radius:var(--radius-lg);border:1px solid rgba(93,202,165,0.25);padding:1.35rem 1.35rem 1.1rem;margin-bottom:1.1rem;}
+.card-header{display:flex;align-items:center;gap:10px;margin-bottom:1.1rem;padding-bottom:0.85rem;border-bottom:1px dashed rgba(29,158,117,0.2);}
+.card-icon{width:36px;height:36px;border-radius:var(--radius-sm);background:var(--green-bg);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.card-icon svg{width:20px;height:20px;stroke:var(--green-main);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.card-label{font-size:15px;font-weight:600;color:var(--gray-900);}
+.field{margin-bottom:1rem;}.field:last-child{margin-bottom:0;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.field label{display:flex;align-items:center;gap:4px;font-size:13px;font-weight:500;color:var(--gray-700);margin-bottom:7px;}
+.req{color:var(--red);font-size:15px;line-height:1;}
+.field input,.field textarea{width:100%;padding:11px 14px;border:1.5px solid var(--gray-300);border-radius:var(--radius-md);font-size:14px;font-family:'Cairo',sans-serif;color:var(--gray-900);background:var(--white);transition:border-color 0.15s,box-shadow 0.15s;direction:rtl;}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--green-mid);box-shadow:0 0 0 3.5px rgba(29,158,117,0.13);}
+.field input::placeholder,.field textarea::placeholder{color:var(--gray-300);font-size:13px;}
+.field textarea{resize:vertical;min-height:80px;line-height:1.6;}
+.field input.error,.field textarea.error{border-color:var(--red);}
+.ts-card{background:var(--green-bg);border:1px solid rgba(93,202,165,0.4);border-radius:var(--radius-md);padding:12px 16px;display:flex;align-items:center;gap:12px;margin-bottom:1.25rem;direction:rtl;}
+.ts-icon{width:38px;height:38px;border-radius:var(--radius-sm);background:rgba(15,110,86,0.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ts-icon svg{width:20px;height:20px;stroke:var(--green-deep);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.ts-body{flex:1;}
+.ts-label{font-size:11px;font-weight:600;color:var(--green-main);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:2px;}
+.ts-value{font-size:14px;font-weight:500;color:var(--green-deep);}
+.submit-btn{width:100%;padding:15px;background:var(--green-main);color:var(--white);border:none;border-radius:var(--radius-lg);font-size:17px;font-weight:700;font-family:'Cairo',sans-serif;cursor:pointer;transition:background 0.15s,transform 0.1s;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:1rem;letter-spacing:0.02em;}
+.submit-btn:hover{background:var(--green-deep);}
+.submit-btn:active{transform:scale(0.985);}
+.submit-btn svg{width:20px;height:20px;stroke:var(--white);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.submit-btn.loading{background:var(--gray-500);cursor:not-allowed;}
+.spinner{width:20px;height:20px;border:2.5px solid rgba(255,255,255,0.35);border-top-color:#fff;border-radius:50%;animation:spin 0.75s linear infinite;display:none;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.footer{display:flex;align-items:center;justify-content:center;gap:7px;font-size:12px;color:var(--gray-500);padding:0.5rem 0;}
+.footer svg{width:14px;height:14px;stroke:var(--green-mid);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.success-wrap{display:none;text-align:center;padding:2rem 0.5rem 3rem;}
+.success-ring{width:84px;height:84px;border-radius:50%;background:var(--green-bg);border:3px solid var(--green-light);display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;}
+.success-ring svg{width:40px;height:40px;stroke:var(--green-main);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;}
+.ok-title{font-size:22px;font-weight:700;margin-bottom:6px;color:var(--gray-900);}
+.ok-sub{font-size:14px;color:var(--gray-500);margin-bottom:4px;}
+.ref-num{font-size:28px;font-weight:700;color:var(--green-main);letter-spacing:0.06em;margin:0.75rem 0 1.75rem;}
+.receipt-card{background:var(--white);border:1px solid rgba(93,202,165,0.3);border-radius:var(--radius-lg);padding:1.25rem;text-align:right;direction:rtl;margin-bottom:1.5rem;}
+.receipt-row{display:flex;justify-content:space-between;align-items:flex-start;padding:8px 0;border-bottom:1px dashed rgba(0,0,0,0.07);gap:12px;}
+.receipt-row:last-child{border:none;padding-bottom:0;}
+.r-label{font-size:12px;font-weight:500;color:var(--gray-500);white-space:nowrap;}
+.r-value{font-size:13px;font-weight:600;color:var(--gray-900);text-align:left;word-break:break-word;flex:1;}
+.status-badge{display:inline-flex;align-items:center;gap:6px;background:var(--green-pale);color:var(--green-deep);font-size:12px;font-weight:700;padding:5px 14px;border-radius:50px;margin-bottom:1.5rem;}
+.status-badge::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--green-mid);animation:pulse 1.8s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(1.4)}}
+.reset-btn{padding:11px 36px;border:1.5px solid var(--green-light);border-radius:var(--radius-lg);background:var(--white);font-family:'Cairo',sans-serif;font-size:15px;font-weight:600;color:var(--green-main);cursor:pointer;transition:all 0.15s;}
+.reset-btn:hover{background:var(--green-bg);}
+@media(max-width:480px){.two-col{grid-template-columns:1fr;}.header-title{font-size:19px;}.lang-btn{padding:7px 20px;font-size:14px;}}
 </style>
 </head>
 <body>
-
 <div class="page-wrap">
-
-  <!-- Language switcher -->
   <div class="lang-bar">
     <button class="lang-btn active" onclick="setLang('ar')" id="btn-ar">العربية</button>
     <button class="lang-btn" onclick="setLang('ku')" id="btn-ku">کوردی</button>
   </div>
 
-  <!-- Setup guide banner (hidden after config) -->
-  <div class="guide-banner" id="setup-banner">
-    <strong>⚙️ إعداد مطلوب:</strong> قبل الاستخدام، انسخ رابط Google Apps Script الخاص بك واستبدل قيمة
-    <code>SCRIPT_URL</code> في كود JavaScript أدناه.
-    راجع <strong>دليل الإعداد</strong> في نهاية الصفحة.
-  </div>
-
-  <!-- ══════════════ FORM VIEW ══════════════ -->
   <div id="form-view">
-
-    <!-- Header -->
     <div class="header">
       <div class="pipe-row">
-        <div class="pipe-h lg"></div>
-        <div class="pipe-dot"></div>
-        <div class="pipe-h sm"></div>
-        <div class="pipe-valve">
-          <svg viewBox="0 0 12 12"><circle cx="6" cy="6" r="4"/><line x1="6" y1="2" x2="6" y2="0"/><line x1="6" y1="10" x2="6" y2="12"/></svg>
-        </div>
-        <div class="pipe-h sm"></div>
-        <div class="pipe-dot"></div>
-        <div class="pipe-h lg"></div>
+        <div class="pipe-h lg"></div><div class="pipe-dot"></div><div class="pipe-h sm"></div>
+        <div class="pipe-valve"><svg viewBox="0 0 12 12"><circle cx="6" cy="6" r="4"/><line x1="6" y1="2" x2="6" y2="0"/><line x1="6" y1="10" x2="6" y2="12"/></svg></div>
+        <div class="pipe-h sm"></div><div class="pipe-dot"></div><div class="pipe-h lg"></div>
       </div>
       <div class="emblem">
-        <!-- water drop + meter SVG -->
         <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M24 6 C24 6, 10 22, 10 30 A14 14 0 0 0 38 30 C38 22 24 6 24 6Z" fill="#D1FAE5" stroke="#0F6E56" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M24 6 C24 6,10 22,10 30 A14 14 0 0 0 38 30 C38 22 24 6 24 6Z" fill="#D1FAE5" stroke="#0F6E56" stroke-width="2" stroke-linejoin="round"/>
           <circle cx="24" cy="30" r="5" fill="#0F6E56" opacity="0.2"/>
           <path d="M20 30 a4 4 0 0 1 8 0" stroke="#0F6E56" stroke-width="1.8" fill="none" stroke-linecap="round"/>
           <line x1="24" y1="26" x2="24" y2="28" stroke="#0F6E56" stroke-width="1.8" stroke-linecap="round"/>
@@ -443,427 +111,162 @@
       <div class="header-sub" id="h-sub">يرجى تعبئة جميع الحقول المطلوبة بدقة</div>
     </div>
 
-    <!-- Personal info card -->
     <div class="card">
       <div class="card-header">
-        <div class="card-icon">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-        </div>
+        <div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
         <span class="card-label" id="s1">المعلومات الشخصية</span>
       </div>
-
       <div class="field">
         <label><span class="req">*</span><span id="l-name">الاسم الرباعي</span></label>
-        <input type="text" id="f-name" autocomplete="name" />
+        <input type="text" id="f-name" autocomplete="name"/>
       </div>
-
       <div class="two-col">
         <div class="field">
           <label><span class="req">*</span><span id="l-nid">رقم البطاقة الوطنية الموحدة</span></label>
-          <input type="text" id="f-nid" inputmode="numeric" maxlength="20" />
+          <input type="text" id="f-nid" inputmode="numeric" maxlength="20"/>
         </div>
         <div class="field">
           <label><span class="req">*</span><span id="l-phone">رقم الهاتف</span></label>
-          <input type="tel" id="f-phone" inputmode="tel" placeholder="07XX XXX XXXX" />
+          <input type="tel" id="f-phone" inputmode="tel" placeholder="07XX XXX XXXX"/>
         </div>
       </div>
     </div>
 
-    <!-- Property info card -->
     <div class="card">
       <div class="card-header">
-        <div class="card-icon">
-          <svg viewBox="0 0 24 24"><path d="M3 12L12 3l9 9"/><path d="M9 21V12h6v9"/><path d="M3 12v9h18v-9"/></svg>
-        </div>
+        <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M3 12L12 3l9 9"/><path d="M9 21V12h6v9"/><path d="M3 12v9h18v-9"/></svg></div>
         <span class="card-label" id="s2">معلومات العقار والاشتراك</span>
       </div>
-
       <div class="two-col">
         <div class="field">
           <label><span class="req">*</span><span id="l-sub">رقم الاشتراك</span></label>
-          <input type="text" id="f-sub" inputmode="numeric" />
+          <input type="text" id="f-sub" inputmode="numeric"/>
         </div>
         <div class="field">
           <label><span class="req">*</span><span id="l-prop">رقم العقار</span></label>
-          <input type="text" id="f-prop" inputmode="numeric" />
+          <input type="text" id="f-prop" inputmode="numeric"/>
         </div>
       </div>
-
       <div class="field">
         <label><span class="req">*</span><span id="l-loc">الموقع / العنوان التفصيلي</span></label>
-        <input type="text" id="f-loc" />
+        <input type="text" id="f-loc"/>
       </div>
-
       <div class="field">
         <label><span id="l-notes">ملاحظات إضافية (اختياري)</span></label>
         <textarea id="f-notes" rows="3"></textarea>
       </div>
     </div>
 
-    <!-- Timestamp -->
     <div class="ts-card">
-      <div class="ts-icon">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
-      </div>
+      <div class="ts-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg></div>
       <div class="ts-body">
         <div class="ts-label" id="ts-label">وقت الطلب — يُسجَّل تلقائياً</div>
         <div class="ts-value" id="ts-display">جاري التحميل...</div>
       </div>
     </div>
 
-    <!-- Submit -->
     <button class="submit-btn" id="submit-btn" onclick="submitForm()">
       <svg id="btn-icon" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
       <div class="spinner" id="btn-spinner"></div>
       <span id="btn-label">تقديم الطلب</span>
     </button>
 
-    <!-- Footer -->
     <div class="footer">
       <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
       <span id="w-txt">بياناتك محمية — دائرة ماء محافظة كركوك</span>
     </div>
+  </div>
 
-  </div><!-- /form-view -->
-
-  <!-- ══════════════ SUCCESS VIEW ══════════════ -->
   <div class="success-wrap" id="success-view">
-    <div class="success-ring">
-      <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-    </div>
+    <div class="success-ring"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
     <div class="status-badge" id="ok-badge">تم الإرسال بنجاح</div>
     <div class="ok-title" id="ok-title">تم تقديم الطلب بنجاح</div>
     <div class="ok-sub" id="ok-sub">احتفظ برقم الطلب للمتابعة مع الدائرة</div>
     <div class="ref-num" id="ref-display"></div>
     <div class="receipt-card" id="receipt-content"></div>
-    <button class="reset-btn" onclick="resetForm()">
-      <span id="new-label">+ طلب جديد</span>
-    </button>
-  </div>
-
-</div><!-- /page-wrap -->
-
-
-<!-- ════════════════════════════════════════════
-     SETUP GUIDE (visible at bottom of page)
-     ════════════════════════════════════════════ -->
-<div style="background:#F9FAFB;border-top:1px solid #E5E7EB;padding:2.5rem 1rem 3rem;font-family:'Cairo',sans-serif;direction:rtl;max-width:620px;margin:0 auto;">
-  <h2 style="font-size:17px;font-weight:700;color:#064E3B;margin-bottom:1.25rem;display:flex;align-items:center;gap:8px;">
-    📋 دليل الإعداد الكامل — خطوة بخطوة
-  </h2>
-
-  <div style="background:#fff;border:1px solid #D1FAE5;border-radius:12px;padding:1.25rem;margin-bottom:1rem;">
-    <p style="font-weight:700;color:#0F6E56;margin-bottom:10px;">الخطوة 1 — إنشاء Google Sheet</p>
-    <ol style="font-size:13px;color:#374151;line-height:2;padding-right:1rem;">
-      <li>اذهب إلى <strong>sheets.google.com</strong> وأنشئ جدولاً جديداً</li>
-      <li>سمّه: <strong>طلبات تركيب عدادات الماء</strong></li>
-      <li>أضف هذه الرؤوس في الصف الأول:
-        <br><code style="background:#F3F4F6;padding:3px 8px;border-radius:4px;font-size:12px;direction:ltr;display:inline-block;margin-top:4px;">رقم الطلب | التاريخ والوقت | الاسم | البطاقة الوطنية | الهاتف | رقم الاشتراك | رقم العقار | الموقع | الملاحظات | اللغة</code>
-      </li>
-    </ol>
-  </div>
-
-  <div style="background:#fff;border:1px solid #D1FAE5;border-radius:12px;padding:1.25rem;margin-bottom:1rem;">
-    <p style="font-weight:700;color:#0F6E56;margin-bottom:10px;">الخطوة 2 — إنشاء Google Apps Script</p>
-    <ol style="font-size:13px;color:#374151;line-height:2;padding-right:1rem;">
-      <li>في Google Sheet، اختر: <strong>الامتدادات ← Apps Script</strong></li>
-      <li>احذف الكود الموجود والصق الكود التالي:</li>
-    </ol>
-    <pre style="background:#1E293B;color:#E2E8F0;border-radius:8px;padding:1rem;font-size:12px;overflow-x:auto;direction:ltr;margin-top:10px;line-height:1.7;">const SHEET_NAME = "Sheet1";
-
-function doPost(e) {
-  const sheet = SpreadsheetApp
-    .getActiveSpreadsheet()
-    .getSheetByName(SHEET_NAME);
-
-  const data = JSON.parse(e.postData.contents);
-
-  sheet.appendRow([
-    data.ref,
-    data.timestamp,
-    data.name,
-    data.nid,
-    data.phone,
-    data.subscription,
-    data.property,
-    data.location,
-    data.notes,
-    data.lang
-  ]);
-
-  return ContentService
-    .createTextOutput(JSON.stringify({ status: "ok", ref: data.ref }))
-    .setMimeType(ContentService.MimeType.JSON);
-}
-
-function doGet(e) {
-  return ContentService
-    .createTextOutput("Water Meter Request API is running.")
-    .setMimeType(ContentService.MimeType.TEXT);
-}</pre>
-    <ol start="3" style="font-size:13px;color:#374151;line-height:2;padding-right:1rem;margin-top:8px;">
-      <li>احفظ السكريبت (Ctrl+S)</li>
-    </ol>
-  </div>
-
-  <div style="background:#fff;border:1px solid #D1FAE5;border-radius:12px;padding:1.25rem;margin-bottom:1rem;">
-    <p style="font-weight:700;color:#0F6E56;margin-bottom:10px;">الخطوة 3 — نشر السكريبت</p>
-    <ol style="font-size:13px;color:#374151;line-height:2;padding-right:1rem;">
-      <li>اضغط <strong>Deploy ← New deployment</strong></li>
-      <li>النوع: اختر <strong>Web app</strong></li>
-      <li>في <em>Execute as</em>: اختر <strong>Me</strong></li>
-      <li>في <em>Who has access</em>: اختر <strong>Anyone</strong></li>
-      <li>اضغط <strong>Deploy</strong> ثم وافق على الصلاحيات</li>
-      <li><strong>انسخ رابط Web App URL</strong> الذي يظهر — يبدأ بـ <code>https://script.google.com/macros/s/...</code></li>
-    </ol>
-  </div>
-
-  <div style="background:#fff;border:1px solid #D1FAE5;border-radius:12px;padding:1.25rem;margin-bottom:1rem;">
-    <p style="font-weight:700;color:#0F6E56;margin-bottom:10px;">الخطوة 4 — ربط النموذج بالسكريبت</p>
-    <ol style="font-size:13px;color:#374151;line-height:2;padding-right:1rem;">
-      <li>افتح ملف <strong>water_meter_form.html</strong> بأي محرر نصوص</li>
-      <li>ابحث عن السطر: <code style="background:#F3F4F6;padding:2px 6px;border-radius:4px;direction:ltr;display:inline-block;">const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwajaKH8iEmmMB0KEA0h3m5TsMOKQSsK_6mnbgBBIn0cDwri6gfSHpIFUEsDcEhD7XyNw/exec';</code></li>
-      <li>استبدل <code>https://script.google.com/macros/s/AKfycbwajaKH8iEmmMB0KEA0h3m5TsMOKQSsK_6mnbgBBIn0cDwri6gfSHpIFUEsDcEhD7XyNw/exec</code> برابط Web App الذي نسخته</li>
-      <li>احفظ الملف</li>
-    </ol>
-  </div>
-
-  <div style="background:#fff;border:1px solid #D1FAE5;border-radius:12px;padding:1.25rem;margin-bottom:1rem;">
-    <p style="font-weight:700;color:#0F6E56;margin-bottom:10px;">الخطوة 5 — نشر الصفحة مجاناً (GitHub Pages)</p>
-    <ol style="font-size:13px;color:#374151;line-height:2;padding-right:1rem;">
-      <li>أنشئ حساباً في <strong>github.com</strong> (مجاني)</li>
-      <li>أنشئ Repository جديد، اسمه مثلاً: <code>water-meter-kirkuk</code></li>
-      <li>ارفع ملف <code>water_meter_form.html</code> واسمه <code>index.html</code></li>
-      <li>اذهب إلى <strong>Settings ← Pages ← Source: main branch</strong></li>
-      <li>ستحصل على رابط مثل: <code>https://yourusername.github.io/water-meter-kirkuk</code></li>
-    </ol>
-  </div>
-
-  <div style="background:#fff;border:1px solid #D1FAE5;border-radius:12px;padding:1.25rem;">
-    <p style="font-weight:700;color:#0F6E56;margin-bottom:10px;">الخطوة 6 — توليد QR Code</p>
-    <ol style="font-size:13px;color:#374151;line-height:2;padding-right:1rem;">
-      <li>اذهب إلى <strong>qr.io</strong> أو <strong>qrcode-monkey.com</strong></li>
-      <li>الصق رابط الصفحة</li>
-      <li>حمّل QR Code بصيغة PNG بدقة عالية</li>
-      <li>اطبعه وضعه في مكتب الاستقبال أو على اللافتة الخارجية</li>
-    </ol>
+    <button class="reset-btn" onclick="resetForm()"><span id="new-label">+ طلب جديد</span></button>
   </div>
 </div>
 
-
 <script>
-// ════════════════════════════════════════
-//  ← ضع رابط Google Apps Script هنا ←
-// ════════════════════════════════════════
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwajaKH8iEmmMB0KEA0h3m5TsMOKQSsK_6mnbgBBIn0cDwri6gfSHpIFUEsDcEhD7XyNw/exec';
 
-// ── translations ──
 const T = {
-  ar: {
-    dept:     'شعبة الواردات — دائرة ماء محافظة كركوك',
-    title:    'طلب تركيب عداد الماء',
-    sub:      'يرجى تعبئة جميع الحقول المطلوبة بدقة',
-    s1:       'المعلومات الشخصية',
-    s2:       'معلومات العقار والاشتراك',
-    lName:    'الاسم الرباعي',
-    lNid:     'رقم البطاقة الوطنية الموحدة',
-    lPhone:   'رقم الهاتف',
-    lSub:     'رقم الاشتراك',
-    lProp:    'رقم العقار',
-    lLoc:     'الموقع / العنوان التفصيلي',
-    lNotes:   'ملاحظات إضافية (اختياري)',
-    tsLabel:  'وقت الطلب — يُسجَّل تلقائياً',
-    btnLabel: 'تقديم الطلب',
-    wTxt:     'بياناتك محمية — دائرة ماء محافظة كركوك',
-    okBadge:  'تم الإرسال بنجاح',
-    okTitle:  'تم تقديم الطلب بنجاح',
-    okSub:    'احتفظ برقم الطلب للمتابعة مع الدائرة',
-    newLabel: '+ طلب جديد',
-    errMsg:   'يرجى تعبئة جميع الحقول الإلزامية',
-    errNet:   'خطأ في الإرسال، يرجى المحاولة مرة أخرى',
-    rRef:     'رقم الطلب',
-    rName:    'الاسم',
-    rNid:     'البطاقة الوطنية',
-    rPhone:   'الهاتف',
-    rSub:     'رقم الاشتراك',
-    rProp:    'رقم العقار',
-    rLoc:     'الموقع',
-    rNotes:   'ملاحظات',
-    rTs:      'وقت الطلب',
-    days:     ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'],
-    locale:   'ar-IQ'
-  },
-  ku: {
-    dept:     'بەشی داهات — بەڕێوەبەرایەتی ئاوی پارێزگای کەرکووک',
-    title:    'داواکاری دامەزراندنی مێتەری ئاو',
-    sub:      'تکایە هەموو خانەکانی داواکراو پڕ بکەرەوە',
-    s1:       'زانیاری کەسی',
-    s2:       'زانیاری موڵک و بەژداری',
-    lName:    'ناوی چوار پارچە',
-    lNid:     'ژمارەی ناسنامەی نیشتیمانی',
-    lPhone:   'ژمارەی تەلەفۆن',
-    lSub:     'ژمارەی بەژداری',
-    lProp:    'ژمارەی موڵک',
-    lLoc:     'شوێن / ناونیشانی تەواو',
-    lNotes:   'تێبینی زیادە (ئارەزوومەندانە)',
-    tsLabel:  'کاتی داواکاری — بە خۆکاری تۆمار دەکرێت',
-    btnLabel: 'پێشکەشکردنی داواکاری',
-    wTxt:     'زانیارییەکانت پارێزراوە — بەڕێوەبەرایەتی ئاوی کەرکووک',
-    okBadge:  'بە سەرکەوتوویی ناردرا',
-    okTitle:  'داواکاری بە سەرکەوتوویی پێشکەش کرا',
-    okSub:    'ژمارەی داواکاری بۆ شوێنپێیکردن لەگەڵ بەڕێوەبەرایەتییەکە بیپارێزە',
-    newLabel: '+ داواکاریی نوێ',
-    errMsg:   'تکایە هەموو خانە پێویستەکان پڕ بکەرەوە',
-    errNet:   'هەڵە لە ناردن، تکایە دووبارە هەوڵ بدەرەوە',
-    rRef:     'ژمارەی داواکاری',
-    rName:    'ناو',
-    rNid:     'ناسنامەی نیشتیمانی',
-    rPhone:   'تەلەفۆن',
-    rSub:     'ژمارەی بەژداری',
-    rProp:    'ژمارەی موڵک',
-    rLoc:     'شوێن',
-    rNotes:   'تێبینی',
-    rTs:      'کاتی داواکاری',
-    days:     ['یەکشەممە','دووشەممە','سێشەممە','چوارشەممە','پێنجشەممە','هەینی','شەممە'],
-    locale:   'ar-IQ'
-  }
+  ar:{dept:'شعبة الواردات — دائرة ماء محافظة كركوك',title:'طلب تركيب عداد الماء',sub:'يرجى تعبئة جميع الحقول المطلوبة بدقة',s1:'المعلومات الشخصية',s2:'معلومات العقار والاشتراك',lName:'الاسم الرباعي',lNid:'رقم البطاقة الوطنية الموحدة',lPhone:'رقم الهاتف',lSub:'رقم الاشتراك',lProp:'رقم العقار',lLoc:'الموقع / العنوان التفصيلي',lNotes:'ملاحظات إضافية (اختياري)',tsLabel:'وقت الطلب — يُسجَّل تلقائياً',btnLabel:'تقديم الطلب',wTxt:'بياناتك محمية — دائرة ماء محافظة كركوك',okBadge:'تم الإرسال بنجاح',okTitle:'تم تقديم الطلب بنجاح',okSub:'احتفظ برقم الطلب للمتابعة مع الدائرة',newLabel:'+ طلب جديد',errMsg:'يرجى تعبئة جميع الحقول الإلزامية',errNet:'خطأ في الإرسال، يرجى المحاولة مرة أخرى',rRef:'رقم الطلب',rName:'الاسم',rNid:'البطاقة الوطنية',rPhone:'الهاتف',rSub:'رقم الاشتراك',rProp:'رقم العقار',rLoc:'الموقع',rNotes:'ملاحظات',rTs:'وقت الطلب',days:['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'],locale:'ar-IQ'},
+  ku:{dept:'بەشی داهات — بەڕێوەبەرایەتی ئاوی پارێزگای کەرکووک',title:'داواکاری دامەزراندنی مێتەری ئاو',sub:'تکایە هەموو خانەکانی داواکراو پڕ بکەرەوە',s1:'زانیاری کەسی',s2:'زانیاری موڵک و بەژداری',lName:'ناوی چوار پارچە',lNid:'ژمارەی ناسنامەی نیشتیمانی',lPhone:'ژمارەی تەلەفۆن',lSub:'ژمارەی بەژداری',lProp:'ژمارەی موڵک',lLoc:'شوێن / ناونیشانی تەواو',lNotes:'تێبینی زیادە (ئارەزوومەندانە)',tsLabel:'کاتی داواکاری — بە خۆکاری تۆمار دەکرێت',btnLabel:'پێشکەشکردنی داواکاری',wTxt:'زانیارییەکانت پارێزراوە — بەڕێوەبەرایەتی ئاوی کەرکووک',okBadge:'بە سەرکەوتوویی ناردرا',okTitle:'داواکاری بە سەرکەوتوویی پێشکەش کرا',okSub:'ژمارەی داواکاری بۆ شوێنپێیکردن لەگەڵ بەڕێوەبەرایەتییەکە بیپارێزە',newLabel:'+ داواکاریی نوێ',errMsg:'تکایە هەموو خانە پێویستەکان پڕ بکەرەوە',errNet:'هەڵە لە ناردن، تکایە دووبارە هەوڵ بدەرەوە',rRef:'ژمارەی داواکاری',rName:'ناو',rNid:'ناسنامەی نیشتیمانی',rPhone:'تەلەفۆن',rSub:'ژمارەی بەژداری',rProp:'ژمارەی موڵک',rLoc:'شوێن',rNotes:'تێبینی',rTs:'کاتی داواکاری',days:['یەکشەممە','دووشەممە','سێشەممە','چوارشەممە','پێنجشەممە','هەینی','شەممە'],locale:'ar-IQ'}
 };
 
-let lang = 'ar';
+let lang='ar';
 
-function setLang(l) {
-  lang = l;
-  document.getElementById('btn-ar').classList.toggle('active', l === 'ar');
-  document.getElementById('btn-ku').classList.toggle('active', l === 'ku');
-  const t = T[l];
-  const map = {
-    'h-dept': t.dept, 'h-title': t.title, 'h-sub': t.sub,
-    's1': t.s1, 's2': t.s2,
-    'l-name': t.lName, 'l-nid': t.lNid, 'l-phone': t.lPhone,
-    'l-sub': t.lSub, 'l-prop': t.lProp, 'l-loc': t.lLoc, 'l-notes': t.lNotes,
-    'ts-label': t.tsLabel, 'btn-label': t.btnLabel, 'w-txt': t.wTxt,
-    'ok-badge': t.okBadge, 'ok-title': t.okTitle, 'ok-sub': t.okSub, 'new-label': t.newLabel
-  };
-  Object.entries(map).forEach(([id, val]) => {
-    const el = document.getElementById(id);
-    if (el) el.textContent = val;
-  });
+function setLang(l){
+  lang=l;
+  document.getElementById('btn-ar').classList.toggle('active',l==='ar');
+  document.getElementById('btn-ku').classList.toggle('active',l==='ku');
+  const t=T[l];
+  const map={'h-dept':t.dept,'h-title':t.title,'h-sub':t.sub,'s1':t.s1,'s2':t.s2,'l-name':t.lName,'l-nid':t.lNid,'l-phone':t.lPhone,'l-sub':t.lSub,'l-prop':t.lProp,'l-loc':t.lLoc,'l-notes':t.lNotes,'ts-label':t.tsLabel,'btn-label':t.btnLabel,'w-txt':t.wTxt,'ok-badge':t.okBadge,'ok-title':t.okTitle,'ok-sub':t.okSub,'new-label':t.newLabel};
+  Object.entries(map).forEach(([id,val])=>{const el=document.getElementById(id);if(el)el.textContent=val;});
 }
 
-// ── clock ──
-function fmtTs(d) {
-  const t = T[lang];
-  const day = t.days[d.getDay()];
-  const date = d.toLocaleDateString(t.locale);
-  const time = d.toLocaleTimeString(t.locale, { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-  return `${day}، ${date} — ${time}`;
+function fmtTs(d){
+  const t=T[lang];
+  return `${t.days[d.getDay()]}، ${d.toLocaleDateString(t.locale)} — ${d.toLocaleTimeString(t.locale,{hour:'2-digit',minute:'2-digit',second:'2-digit'})}`;
 }
-function tick() {
-  const el = document.getElementById('ts-display');
-  if (el) el.textContent = fmtTs(new Date());
-}
-tick();
-setInterval(tick, 1000);
+function tick(){const el=document.getElementById('ts-display');if(el)el.textContent=fmtTs(new Date());}
+tick();setInterval(tick,1000);
 
-// ── ref number ──
-function genRef() {
-  const d = new Date();
-  const yy = String(d.getFullYear()).slice(-2);
-  const mm = String(d.getMonth() + 1).padStart(2, '0');
-  const dd = String(d.getDate()).padStart(2, '0');
-  const rnd = Math.floor(Math.random() * 9000) + 1000;
-  return `WM-${yy}${mm}${dd}-${rnd}`;
+function genRef(){
+  const d=new Date();
+  return `WM-${String(d.getFullYear()).slice(-2)}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}-${Math.floor(Math.random()*9000)+1000}`;
 }
 
-// ── submit ──
-async function submitForm() {
-  const t = T[lang];
-  const fields = ['f-name', 'f-nid', 'f-phone', 'f-sub', 'f-prop', 'f-loc'];
-  let valid = true;
-  fields.forEach(id => {
-    const el = document.getElementById(id);
-    if (!el.value.trim()) { el.classList.add('error'); valid = false; }
-    else el.classList.remove('error');
-  });
-  if (!valid) { alert(t.errMsg); return; }
+async function submitForm(){
+  const t=T[lang];
+  const fields=['f-name','f-nid','f-phone','f-sub','f-prop','f-loc'];
+  let valid=true;
+  fields.forEach(id=>{const el=document.getElementById(id);if(!el.value.trim()){el.classList.add('error');valid=false;}else el.classList.remove('error');});
+  if(!valid){alert(t.errMsg);return;}
 
-  const name  = document.getElementById('f-name').value.trim();
-  const nid   = document.getElementById('f-nid').value.trim();
-  const phone = document.getElementById('f-phone').value.trim();
-  const sub   = document.getElementById('f-sub').value.trim();
-  const prop  = document.getElementById('f-prop').value.trim();
-  const loc   = document.getElementById('f-loc').value.trim();
-  const notes = document.getElementById('f-notes').value.trim();
+  const name=document.getElementById('f-name').value.trim();
+  const nid=document.getElementById('f-nid').value.trim();
+  const phone=document.getElementById('f-phone').value.trim();
+  const sub=document.getElementById('f-sub').value.trim();
+  const prop=document.getElementById('f-prop').value.trim();
+  const loc=document.getElementById('f-loc').value.trim();
+  const notes=document.getElementById('f-notes').value.trim();
+  const now=new Date();
+  const ref=genRef();
+  const timestamp=fmtTs(now);
+  const payload={ref,timestamp,name,nid,phone,subscription:sub,property:prop,location:loc,notes,lang};
 
-  const now = new Date();
-  const ref = genRef();
-  const timestamp = fmtTs(now);
+  const btn=document.getElementById('submit-btn');
+  const icon=document.getElementById('btn-icon');
+  const spinner=document.getElementById('btn-spinner');
+  btn.classList.add('loading');btn.disabled=true;
+  icon.style.display='none';spinner.style.display='block';
 
-  const payload = { ref, timestamp, name, nid, phone, subscription: sub, property: prop, location: loc, notes, lang };
-
-  // ── show loading ──
-  const btn = document.getElementById('submit-btn');
-  const icon = document.getElementById('btn-icon');
-  const spinner = document.getElementById('btn-spinner');
-  btn.classList.add('loading');
-  btn.disabled = true;
-  icon.style.display = 'none';
-  spinner.style.display = 'block';
-
-  // ── send to Google Sheets ──
-if (SCRIPT_URL !== 'YOUR_SCRIPT_URL_HERE') {    try {
-      await fetch(SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-    } catch (err) {
-      btn.classList.remove('loading');
-      btn.disabled = false;
-      icon.style.display = '';
-      spinner.style.display = 'none';
-      alert(t.errNet);
-      return;
-    }
+  try {
+    await fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+  } catch(err){
+    btn.classList.remove('loading');btn.disabled=false;
+    icon.style.display='';spinner.style.display='none';
+    alert(t.errNet);return;
   }
 
-  // ── show success ──
-  btn.classList.remove('loading');
-  btn.disabled = false;
-  icon.style.display = '';
-  spinner.style.display = 'none';
+  btn.classList.remove('loading');btn.disabled=false;
+  icon.style.display='';spinner.style.display='none';
 
-  const rows = [
-    [t.rRef,   ref],
-    [t.rName,  name],
-    [t.rNid,   nid],
-    [t.rPhone, phone],
-    [t.rSub,   sub],
-    [t.rProp,  prop],
-    [t.rLoc,   loc],
-    notes ? [t.rNotes, notes] : null,
-    [t.rTs, timestamp]
-  ].filter(Boolean);
-
-  document.getElementById('ref-display').textContent = ref;
-  document.getElementById('receipt-content').innerHTML = rows.map(([l, v]) =>
-    `<div class="receipt-row"><span class="r-label">${l}</span><span class="r-value">${v}</span></div>`
-  ).join('');
-
-  document.getElementById('form-view').style.display = 'none';
-  document.getElementById('success-view').style.display = 'block';
+  const rows=[[t.rRef,ref],[t.rName,name],[t.rNid,nid],[t.rPhone,phone],[t.rSub,sub],[t.rProp,prop],[t.rLoc,loc],notes?[t.rNotes,notes]:null,[t.rTs,timestamp]].filter(Boolean);
+  document.getElementById('ref-display').textContent=ref;
+  document.getElementById('receipt-content').innerHTML=rows.map(([l,v])=>`<div class="receipt-row"><span class="r-label">${l}</span><span class="r-value">${v}</span></div>`).join('');
+  document.getElementById('form-view').style.display='none';
+  document.getElementById('success-view').style.display='block';
   setLang(lang);
 }
 
-function resetForm() {
-  ['f-name', 'f-nid', 'f-phone', 'f-sub', 'f-prop', 'f-loc', 'f-notes'].forEach(id => {
-    const el = document.getElementById(id);
-    el.value = '';
-    el.classList.remove('error');
-  });
-  document.getElementById('form-view').style.display = 'block';
-  document.getElementById('success-view').style.display = 'none';
+function resetForm(){
+  ['f-name','f-nid','f-phone','f-sub','f-prop','f-loc','f-notes'].forEach(id=>{const el=document.getElementById(id);el.value='';el.classList.remove('error');});
+  document.getElementById('form-view').style.display='block';
+  document.getElementById('success-view').style.display='none';
 }
 </script>
 </body>
